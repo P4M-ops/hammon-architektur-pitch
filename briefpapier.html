@@ -203,35 +203,31 @@ body {
   color: #1a1b1e;
 }
 
-/* ── Fußzeile – Swiss Modernism Grid ── */
+/* ── Fußzeile – Swiss Modernism: clean, label-free ── */
 .a4__footer {
   position: absolute;
   bottom: 0;
   left: 69px;
   right: 55px;
-  padding: 0 0 22px 0;
-  border-top: .5px solid var(--copper);
+  padding: 0 0 20px 0;
+  border-top: .5px solid #d0d0d0;
 }
-.a4__footer-grid {
-  display: grid;
-  grid-template-columns: 3fr 4fr 4fr;
-  gap: 0 16px;
-  padding-top: 10px;
-}
-.a4__footer-col {
-  font-size: 7px;
+.a4__footer-row {
+  display: flex;
+  gap: 0;
+  padding-top: 8px;
+  font-size: 6.5px;
   font-weight: 400;
-  color: #777;
-  line-height: 1.75;
+  color: #888;
+  line-height: 1.6;
+  letter-spacing: .1px;
 }
-.a4__footer-col strong {
-  font-weight: 500;
-  color: #999;
-  display: block;
-  font-size: 5.5px;
-  letter-spacing: 1.8px;
-  text-transform: uppercase;
-  margin-bottom: 3px;
+.a4__footer-row span {
+  white-space: nowrap;
+}
+.a4__footer-row .sep {
+  margin: 0 6px;
+  color: #ccc;
 }
 
 /* ── Specs ── */
@@ -301,14 +297,12 @@ body {
   .a4__closing-name { color: #111; margin-top: 20mm; }
   .a4__footer {
     left: 25mm; right: 20mm;
-    padding: 0 0 12mm 0;
-    border-top-color: var(--copper);
-    border-top-width: .4mm;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    padding: 0 0 10mm 0;
+    border-top-color: #bbb;
+    border-top-width: .3mm;
   }
-  .a4__footer-grid { padding-top: 2.5mm; gap: 0 4mm; }
-  .a4__footer-col { font-size: 7pt; color: #555; line-height: 1.75; }
-  .a4__footer-col strong { font-weight: 500; color: #888; font-size: 5.5pt; letter-spacing: 1pt; margin-bottom: 1mm; }
+  .a4__footer-row { padding-top: 2mm; font-size: 6.5pt; color: #555; }
+  .a4__footer-row .sep { color: #bbb; }
   .a4__mark {
     border-top-color: #bbb !important;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
@@ -331,9 +325,10 @@ body {
   .a4__closing { top: 67.3%; left: 8.4%; font-size: 7.5px; }
   .a4__footer {
     left: 8.4%; right: 6.7%;
-    padding: 0 0 2.9% 0;
+    padding: 0 0 2.5% 0;
   }
-  .a4__footer-col { font-size: 5px; }
+  .a4__footer-row { font-size: 4.5px; flex-wrap: wrap; }
+  .a4__footer-row .sep { margin: 0 3px; }
   .specs__grid { grid-template-columns: 1fr; }
 }
 </style>
@@ -399,28 +394,29 @@ body {
         <span class="a4__closing-name">Katrin Hammon</span>
       </div>
 
-      <!-- Fu&szlig;zeile – schlicht mit grauer Trennlinie -->
+      <!-- Fu&szlig;zeile – Swiss Modernism: linear, ohne Labels -->
       <div class="a4__footer">
-        <div class="a4__footer-grid">
-          <div class="a4__footer-col">
-            <strong>Adresse</strong>
-            Katrin Hammon<br>
-            Gr&ouml;nholm 7b<br>
-            24991 Freienwill
-          </div>
-          <div class="a4__footer-col">
-            <strong>Kontakt</strong>
-            T 0160 94182990<br>
-            katrin@hammon-architektur.de<br>
-            www.hammon-architektur.de
-          </div>
-          <div class="a4__footer-col">
-            <strong>Architektin</strong>
-            Dipl.-Ing. Architektin<br>
-            Freischaffende Architektin<br>
-            AIK Schleswig-Holstein &middot; Nr. 6031<br>
-            Steuernr. 15/093/15182
-          </div>
+        <div class="a4__footer-row">
+          <span>Katrin Hammon</span>
+          <span class="sep">&middot;</span>
+          <span>Dipl.-Ing. Architektin</span>
+          <span class="sep">&middot;</span>
+          <span>Gr&ouml;nholm 7b</span>
+          <span class="sep">&middot;</span>
+          <span>24991 Freienwill</span>
+          <span class="sep">&middot;</span>
+          <span>T 0160 94182990</span>
+          <span class="sep">&middot;</span>
+          <span>katrin@hammon-architektur.de</span>
+        </div>
+        <div class="a4__footer-row">
+          <span>www.hammon-architektur.de</span>
+          <span class="sep">&middot;</span>
+          <span>Freischaffende Architektin</span>
+          <span class="sep">&middot;</span>
+          <span>AIK Schleswig-Holstein Nr. 6031</span>
+          <span class="sep">&middot;</span>
+          <span>Steuernr. 15/093/15182</span>
         </div>
       </div>
 

@@ -147,7 +147,7 @@ body {
 
 /* Zone 1: Logo (oben) */
 .back-head__logo {
-  width: 160px;
+  width: 130px;
   height: auto;
   display: block;
 }
@@ -157,17 +157,17 @@ body {
   margin-top: auto;
 }
 .back-identity__name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text-dark);
   line-height: 1.2;
   display: block;
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 .back-identity__title {
-  font-size: 8.5px;
+  font-size: 7.5px;
   font-weight: 400;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
   color: var(--copper);
   display: block;
@@ -175,35 +175,35 @@ body {
 
 /* Zone 3: Adresse + Kontakt (zweispaltig, top-aligned) */
 .back-contact {
-  margin-top: 14px;
+  margin-top: 12px;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 20px;
+  gap: 0 16px;
   align-items: start;
 }
 .back-contact__col {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 .back-contact__col span {
-  font-size: 11.5px;
+  font-size: 10.5px;
   font-weight: 400;
   color: var(--text-body);
-  line-height: 1.5;
+  line-height: 1.55;
   font-feature-settings: 'tnum' 1;
 }
 
 /* Zone 4: Fußzeile (unten) */
 .back-foot {
   margin-top: auto;
-  font-size: 7.5px;
+  font-size: 7px;
   font-weight: 400;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.8px;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: #aaa;
   padding-top: 10px;
-  border-top: 1px solid rgba(0,0,0,.08);
+  border-top: .5px solid rgba(0,0,0,.06);
 }
 
 /* ── Specs ── */
@@ -274,12 +274,12 @@ body {
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
     padding: 5.5mm 6mm 4mm;
   }
-  .back-head__logo { width: 28mm; }
-  .back-identity__name { font-size: 9.5pt; color: #111; margin-bottom: .5mm; }
-  .back-identity__title { font-size: 6pt; letter-spacing: .8pt; color: var(--copper) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .back-contact { margin-top: 2.5mm; gap: 0 4mm; }
-  .back-contact__col span { font-size: 7.5pt; color: #222; }
-  .back-foot { font-size: 5.5pt; letter-spacing: .8pt; padding-top: 2mm; border-top-color: rgba(0,0,0,.12); }
+  .back-head__logo { width: 24mm; }
+  .back-identity__name { font-size: 9pt; color: #111; margin-bottom: .3mm; }
+  .back-identity__title { font-size: 5.5pt; letter-spacing: 1pt; color: var(--copper) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .back-contact { margin-top: 2mm; gap: 0 3mm; }
+  .back-contact__col span { font-size: 7pt; color: #222; }
+  .back-foot { font-size: 5pt; letter-spacing: 1pt; padding-top: 2mm; border-top-color: rgba(0,0,0,.08); color: #999; }
   .specs { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .ftr { border-top-color: #ddd; color: #999; }
 }
@@ -294,6 +294,7 @@ body {
   .card--back { padding: 7% 7% 5%; }
   .back-head__logo { width: 28%; }
   .back-contact__col span { font-size: 10px; }
+  .back-foot { font-size: 6px; }
   .specs__grid { grid-template-columns: 1fr; }
 }
 </style>
