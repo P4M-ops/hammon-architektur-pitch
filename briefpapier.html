@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briefpapier – Hammon Architektur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0e0e0e;
+  --surface-1: #141414;
+  --copper: #c08040;
+  --cream: #faf8f5;
+  --gray-600: #606060;
+  --gray-500: #808080;
+  --gray-400: #999;
+  --border: rgba(255,255,255,.05);
+  --font: 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--gray-400);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 122px 48px 120px;
+}
+
+/* ── Header ── */
+.hdr {
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 72px;
+  animation: up .7s var(--ease) both;
+}
+.hdr__ov {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 20px;
+}
+.hdr__title {
+  font-size: clamp(40px, 5vw, 64px);
+  font-weight: 600;
+  line-height: .92;
+  letter-spacing: -1.5px;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 12px;
+}
+.hdr__sub {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+/* ── A4 Preview ── */
+.a4-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 80px;
+  animation: up .7s var(--ease) .12s both;
+}
+
+/* 580×820px = A4 proportional */
+.a4 {
+  width: 580px;
+  height: 820px;
+  background: #fdfcfa;
+  position: relative;
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.15),
+    0 16px 48px rgba(0,0,0,.4),
+    0 48px 100px rgba(0,0,0,.3);
+  overflow: hidden;
+  transition: transform .5s var(--ease), box-shadow .5s ease;
+}
+.a4:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,.15),
+    0 24px 64px rgba(0,0,0,.5),
+    0 64px 130px rgba(0,0,0,.35);
+}
+
+/* ── Faltmarken (DIN 5008) ── */
+.a4__mark {
+  position: absolute;
+  left: 0;
+  width: 7px;
+  height: 0;
+  border-top: .5px solid #c0c0c0;
+  z-index: 2;
+}
+.a4__mark--fold1 { top: calc(820px * 105 / 297); }
+.a4__mark--punch { top: calc(820px * 148.5 / 297); }
+.a4__mark--fold2 { top: calc(820px * 210 / 297); }
+
+/*
+  Umrechnung: 580px / 210mm = 2.762px/mm
+  Ränder: links 25mm=69px, rechts 20mm=55px
+  Positionen berechnet aus mm × (820/297)
+*/
+
+/* ── Briefkopf: Nur Logo, kein Akzentstrich ── */
+.a4__header {
+  padding: 40px 55px 0 69px;
+}
+.a4__logo {
+  width: 145px;
+  height: auto;
+  display: block;
+}
+
+/* ── Absenderzeile ── */
+.a4__sender {
+  position: absolute;
+  top: calc(820px * 45 / 297);
+  left: 69px;
+  font-size: 7px;
+  font-weight: 400;
+  color: #aaa;
+  letter-spacing: .2px;
+  padding-bottom: 2px;
+  border-bottom: .5px solid #ddd;
+}
+
+/* ── Empfänger ── */
+.a4__recipient {
+  position: absolute;
+  top: calc(820px * 51 / 297);
+  left: 69px;
+  font-size: 10.5px;
+  font-weight: 400;
+  color: #222;
+  line-height: 1.55;
+}
+
+/* ── Datum (rechtsbündig, bei ~95mm) ── */
+.a4__date {
+  position: absolute;
+  top: calc(820px * 95 / 297);
+  right: 55px;
+  font-size: 10.5px;
+  font-weight: 400;
+  color: #444;
+}
+
+/* ── Betreff (bei ~112mm) ── */
+.a4__subject {
+  position: absolute;
+  top: calc(820px * 112 / 297);
+  left: 69px;
+  right: 55px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #1a1b1e;
+}
+
+/* ── Brieftext (bei ~125mm, 11px Schriftgröße) ── */
+.a4__body {
+  position: absolute;
+  top: calc(820px * 125 / 297);
+  left: 69px;
+  right: 55px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #333;
+  line-height: 1.75;
+}
+.a4__body p {
+  margin-bottom: 12px;
+}
+
+/* ── Grußformel ── */
+.a4__closing {
+  position: absolute;
+  top: calc(820px * 200 / 297);
+  left: 69px;
+  font-size: 11px;
+  color: #333;
+  line-height: 1.65;
+}
+.a4__closing-name {
+  display: block;
+  margin-top: 56px;
+  font-weight: 500;
+  color: #1a1b1e;
+}
+
+/* ── Fußzeile – Swiss Modernism Grid ── */
+.a4__footer {
+  position: absolute;
+  bottom: 0;
+  left: 69px;
+  right: 55px;
+  padding: 0 0 22px 0;
+  border-top: .5px solid var(--copper);
+}
+.a4__footer-grid {
+  display: grid;
+  grid-template-columns: 3fr 4fr 4fr;
+  gap: 0 16px;
+  padding-top: 10px;
+}
+.a4__footer-col {
+  font-size: 7px;
+  font-weight: 400;
+  color: #777;
+  line-height: 1.75;
+}
+.a4__footer-col strong {
+  font-weight: 500;
+  color: #999;
+  display: block;
+  font-size: 5.5px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+/* ── Specs ── */
+.specs {
+  background: var(--surface-1);
+  border-left: 2px solid var(--copper);
+  padding: 28px 32px;
+  animation: up .7s var(--ease) .24s both;
+}
+.specs__title {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  margin-bottom: 20px;
+}
+.specs__grid {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 10px 24px;
+}
+.specs__label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--gray-500);
+}
+.specs__value {
+  font-size: 12px;
+  color: var(--gray-400);
+}
+
+.ftr {
+  margin-top: 72px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--gray-600);
+}
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Print ── */
+@media print {
+  body { background: white; }
+  .page { padding: 0; max-width: none; }
+  .hdr, .specs, .ftr { display: none; }
+  .a4-wrap { margin: 0; animation: none; }
+  .a4 {
+    width: 210mm; height: 297mm;
+    box-shadow: none; transform: none !important;
+  }
+  .a4__header { padding: 18mm 20mm 0 25mm; }
+  .a4__logo { width: 52mm; }
+  .a4__sender { top: 45mm; left: 25mm; font-size: 7pt; }
+  .a4__recipient { top: 51mm; left: 25mm; font-size: 10pt; color: #111; }
+  .a4__date { top: 95mm; right: 20mm; font-size: 10pt; color: #222; }
+  .a4__subject { top: 112mm; left: 25mm; right: 20mm; font-size: 10pt; color: #111; }
+  .a4__body { top: 125mm; left: 25mm; right: 20mm; font-size: 10.5pt; color: #222; line-height: 1.65; }
+  .a4__body p { margin-bottom: 4mm; }
+  .a4__closing { top: 200mm; left: 25mm; font-size: 10.5pt; color: #222; }
+  .a4__closing-name { color: #111; margin-top: 20mm; }
+  .a4__footer {
+    left: 25mm; right: 20mm;
+    padding: 0 0 12mm 0;
+    border-top-color: var(--copper);
+    border-top-width: .4mm;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .a4__footer-grid { padding-top: 2.5mm; gap: 0 4mm; }
+  .a4__footer-col { font-size: 7pt; color: #555; line-height: 1.75; }
+  .a4__footer-col strong { font-weight: 500; color: #888; font-size: 5.5pt; letter-spacing: 1pt; margin-bottom: 1mm; }
+  .a4__mark {
+    border-top-color: #bbb !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+}
+
+@media (max-width: 640px) {
+  .page { padding: 40px 20px 80px; }
+  .a4 {
+    width: 100%; max-width: 420px;
+    height: auto; aspect-ratio: 210/297;
+  }
+  .a4__header { padding: 4.9% 6.7% 0 8.4%; }
+  .a4__logo { width: 25%; }
+  .a4__sender { top: 15.2%; left: 8.4%; font-size: 5px; }
+  .a4__recipient { top: 17.2%; left: 8.4%; font-size: 7.5px; }
+  .a4__date { top: 32%; right: 6.7%; font-size: 7.5px; }
+  .a4__subject { top: 37.7%; left: 8.4%; right: 6.7%; font-size: 8px; }
+  .a4__body { top: 42.1%; left: 8.4%; right: 6.7%; font-size: 7.5px; }
+  .a4__closing { top: 67.3%; left: 8.4%; font-size: 7.5px; }
+  .a4__footer {
+    left: 8.4%; right: 6.7%;
+    padding: 0 0 2.9% 0;
+  }
+  .a4__footer-col { font-size: 5px; }
+  .specs__grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<nav style="position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;justify-content:space-between;align-items:center;padding:10px 24px;background:rgba(14,14,14,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(192,128,64,.15);font-family:'Inter',sans-serif;">
+  <a href="index.html" style="font-size:12px;font-weight:500;color:#c08040;text-decoration:none;display:flex;align-items:center;gap:6px;">&#8592; &Uuml;bersicht</a>
+  <span style="font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:rgba(248,246,243,.4);">Briefpapier</span>
+  <span style="font-size:9px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#606060;">Pro4Media</span>
+</nav>
+<div class="page">
+
+  <header class="hdr">
+    <div class="hdr__ov">Print Design</div>
+    <h1 class="hdr__title">Briefpapier</h1>
+    <div class="hdr__sub">Hammon Architektur &middot; DIN A4</div>
+  </header>
+
+  <section class="a4-wrap">
+    <div class="a4">
+
+      <div class="a4__mark a4__mark--fold1"></div>
+      <div class="a4__mark a4__mark--punch"></div>
+      <div class="a4__mark a4__mark--fold2"></div>
+
+      <!-- Briefkopf: Logo ohne Akzentstrich -->
+      <div class="a4__header">
+        <img class="a4__logo" src="assets/hammon-logo.png" alt="Hammon Architektur">
+      </div>
+
+      <!-- Absenderzeile -->
+      <div class="a4__sender">
+        Katrin Hammon &middot; Gr&ouml;nholm 7b &middot; 24991 Freienwill
+      </div>
+
+      <!-- Empf&auml;nger -->
+      <div class="a4__recipient">
+        Frau<br>
+        Maria Petersen<br>
+        Husumer Stra&szlig;e 42<br>
+        24939 Flensburg
+      </div>
+
+      <!-- Datum -->
+      <div class="a4__date">Freienwill, 23. Februar 2026</div>
+
+      <!-- Betreff -->
+      <div class="a4__subject">
+        Honorarangebot Entwurfsplanung Wohnhaus Petersen
+      </div>
+
+      <!-- Brieftext -->
+      <div class="a4__body">
+        <p>Sehr geehrte Frau Petersen,</p>
+        <p>vielen Dank f&uuml;r das angenehme Gespr&auml;ch und die Besichtigung Ihres Grundst&uuml;cks in Handewitt. Gerne &uuml;bersende ich Ihnen mein Honorarangebot f&uuml;r die Entwurfs- und Genehmigungsplanung Ihres Einfamilienhauses.</p>
+        <p>Die Leistungen umfassen die Leistungsphasen 1 bis 4 nach HOAI. In der Anlage finden Sie eine detaillierte Aufstellung der einzelnen Positionen sowie den voraussichtlichen Zeitrahmen.</p>
+        <p>F&uuml;r R&uuml;ckfragen stehe ich Ihnen selbstverst&auml;ndlich gerne zur Verf&uuml;gung.</p>
+      </div>
+
+      <!-- Gru&szlig;formel -->
+      <div class="a4__closing">
+        Mit freundlichen Gr&uuml;&szlig;en
+        <span class="a4__closing-name">Katrin Hammon</span>
+      </div>
+
+      <!-- Fu&szlig;zeile – schlicht mit grauer Trennlinie -->
+      <div class="a4__footer">
+        <div class="a4__footer-grid">
+          <div class="a4__footer-col">
+            <strong>Adresse</strong>
+            Katrin Hammon<br>
+            Gr&ouml;nholm 7b<br>
+            24991 Freienwill
+          </div>
+          <div class="a4__footer-col">
+            <strong>Kontakt</strong>
+            T 0160 94182990<br>
+            katrin@hammon-architektur.de<br>
+            www.hammon-architektur.de
+          </div>
+          <div class="a4__footer-col">
+            <strong>Architektin</strong>
+            Dipl.-Ing. Architektin<br>
+            Freischaffende Architektin<br>
+            AIK Schleswig-Holstein &middot; Nr. 6031<br>
+            Steuernr. 15/093/15182
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="specs">
+    <div class="specs__title">Spezifikationen</div>
+    <div class="specs__grid">
+      <span class="specs__label">Format</span>
+      <span class="specs__value">DIN A4 (210 &times; 297 mm)</span>
+      <span class="specs__label">Papier</span>
+      <span class="specs__value">120 g/m&sup2; (Empfehlung: Gmund Cotton Linen Cream)</span>
+      <span class="specs__label">Druck</span>
+      <span class="specs__value">Farbig, einseitig (Briefkopf + Fu&szlig;zeile)</span>
+      <span class="specs__label">Schriftgr&ouml;&szlig;e</span>
+      <span class="specs__value">11pt Flie&szlig;text, 10pt Betreff/Datum</span>
+      <span class="specs__label">Faltmarken</span>
+      <span class="specs__value">DIN 5008 Form B (105 mm, 210 mm) + Lochmarke (148,5 mm)</span>
+      <span class="specs__label">R&auml;nder</span>
+      <span class="specs__value">Links 25 mm, rechts 20 mm (DIN 5008)</span>
+    </div>
+  </div>
+
+  <footer class="ftr">
+    <span>Hammon Architektur &middot; Corporate Design</span>
+    <span>Pro4Media Digitalagentur</span>
+  </footer>
+
+</div>
+</body>
+</html>

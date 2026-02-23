@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hammon Architektur – Projekt&uuml;bersicht | Pro4Media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0e0e0e;
+  --surface-1: #141414;
+  --surface-2: #1e1e1e;
+  --surface-3: #2a2a2a;
+  --surface-4: #3d3d3d;
+  --copper: #c08040;
+  --copper-light: #d4974f;
+  --copper-glow: rgba(192,128,64,.12);
+  --cream: #faf8f5;
+  --warm: #f2efea;
+  --warm-2: #e8e4de;
+  --text-dark: #1a1b1e;
+  --text-body: #4a4843;
+  --text-muted: #706b63;
+  --text-light: rgba(248,246,243,.75);
+  --text-light-muted: rgba(248,246,243,.5);
+  --gray-600: #606060;
+  --gray-500: #808080;
+  --gray-400: #999;
+  --border: rgba(255,255,255,.05);
+  --font: 'Inter', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --max-w: 1100px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--gray-400);
+  background: var(--black);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── Animations ── */
+@keyframes up {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes kupferline {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.anim { animation: up .7s var(--ease) both; }
+.anim-d1 { animation-delay: .1s; }
+.anim-d2 { animation-delay: .2s; }
+.anim-d3 { animation-delay: .3s; }
+.anim-d4 { animation-delay: .4s; }
+.anim-d5 { animation-delay: .5s; }
+.anim-d6 { animation-delay: .6s; }
+
+/* ── Overline ── */
+.overline {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.overline::before {
+  content: '';
+  width: 24px;
+  height: 1.5px;
+  background: var(--copper);
+  transform-origin: left;
+  animation: kupferline .8s var(--ease) .3s both;
+}
+
+/* ═══════════════════════
+   BRAND BAR
+   ═══════════════════════ */
+.brand-bar {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  animation: fadeIn .5s ease both;
+}
+.brand-bar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.brand-bar__name {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+.brand-bar__date {
+  font-size: 10px;
+  color: var(--gray-600);
+  letter-spacing: .5px;
+}
+
+/* ═══════════════════════
+   HERO
+   ═══════════════════════ */
+.hero {
+  padding: 80px 0 40px;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--copper), transparent);
+  opacity: .2;
+}
+.hero__logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 40px;
+  opacity: .15;
+}
+.hero__greeting {
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -1px;
+  color: var(--cream);
+  margin-bottom: 20px;
+}
+.hero__text {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-light-muted);
+  max-width: 560px;
+}
+.hero__text a {
+  color: var(--copper);
+  border-bottom: 1px solid rgba(192,128,64,.3);
+  transition: border-color .3s;
+}
+.hero__text a:hover {
+  border-color: var(--copper);
+}
+
+/* ═══════════════════════
+   SECTION SPACING
+   ═══════════════════════ */
+.section {
+  padding: 72px 0;
+}
+.section--border {
+  border-bottom: 1px solid var(--border);
+}
+
+/* ═══════════════════════
+   CARDS GRID
+   ═══════════════════════ */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.card {
+  background: var(--surface-1);
+  border: 1px solid rgba(255,255,255,.03);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  border-color: rgba(192,128,64,.15);
+}
+
+/* Card Preview Area */
+.card__preview {
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-2);
+}
+.card__preview-icon {
+  color: var(--copper);
+  opacity: .12;
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.card:hover .card__preview-icon {
+  opacity: .2;
+  transform: scale(1.05);
+}
+
+/* Preview: Website Prototype (mini layout) */
+.card__preview--proto {
+  background: var(--black);
+  padding: 20px;
+}
+.proto-mini {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--surface-3);
+  border-radius: 2px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.proto-mini__nav {
+  height: 6px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--surface-3);
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  gap: 2px;
+}
+.proto-mini__dot {
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: var(--surface-4);
+}
+.proto-mini__hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.proto-mini__hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: .04;
+  background-image:
+    linear-gradient(var(--copper) .5px, transparent .5px),
+    linear-gradient(90deg, var(--copper) .5px, transparent .5px);
+  background-size: 12px 12px;
+}
+.proto-mini__hero-text {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cream);
+  opacity: .4;
+  position: relative;
+  z-index: 1;
+}
+.proto-mini__sections {
+  display: flex;
+  gap: 1px;
+}
+.proto-mini__section {
+  flex: 1;
+  height: 20px;
+}
+.proto-mini__section--light { background: var(--warm); opacity: .3; }
+.proto-mini__section--dark { background: var(--surface-2); }
+
+/* Preview: Design System */
+.card__preview--ds {
+  background: var(--black);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ds-mini__colors {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+.ds-mini__swatch {
+  aspect-ratio: 1;
+  border-radius: 2px;
+}
+.ds-mini__typo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.ds-mini__line {
+  height: 2px;
+  background: var(--surface-4);
+  border-radius: 1px;
+}
+.ds-mini__line:nth-child(1) { width: 80%; height: 4px; background: var(--cream); opacity: .3; }
+.ds-mini__line:nth-child(2) { width: 60%; opacity: .2; }
+.ds-mini__line:nth-child(3) { width: 90%; opacity: .15; }
+.ds-mini__line:nth-child(4) { width: 50%; opacity: .1; }
+
+/* Preview: Visitenkarte */
+.card__preview--vk {
+  background: var(--black);
+  padding: 24px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+.vk-mini {
+  width: 100px;
+  height: 65px;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+.vk-mini--front {
+  background: var(--black);
+  border: 1px solid var(--surface-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vk-mini--front img {
+  width: 60px;
+  opacity: .6;
+}
+.vk-mini--back {
+  background: var(--warm);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.vk-mini__logo-sm {
+  width: 28px;
+  opacity: .7;
+}
+.vk-mini__accent {
+  width: 10px;
+  height: 1px;
+  background: var(--copper);
+  margin-top: 2px;
+}
+.vk-mini__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.vk-mini__line {
+  height: 1px;
+  background: var(--text-dark);
+  opacity: .15;
+  border-radius: .5px;
+}
+.vk-mini__line:nth-child(1) { width: 40%; }
+.vk-mini__line:nth-child(2) { width: 55%; }
+.vk-mini__line:nth-child(3) { width: 35%; }
+
+/* Preview: Briefpapier */
+.card__preview--bp {
+  background: var(--black);
+  padding: 20px 40px;
+}
+.bp-mini {
+  width: 100%;
+  height: 100%;
+  background: #fdfcfa;
+  border-radius: 1px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px 8px;
+}
+.bp-mini__logo {
+  width: 32px;
+  opacity: .7;
+  margin-bottom: 16px;
+}
+.bp-mini__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.bp-mini__line {
+  height: 1px;
+  background: #333;
+  opacity: .12;
+}
+.bp-mini__line:nth-child(1) { width: 45%; height: 1.5px; opacity: .2; }
+.bp-mini__line:nth-child(2) { width: 90%; }
+.bp-mini__line:nth-child(3) { width: 85%; }
+.bp-mini__line:nth-child(4) { width: 70%; }
+.bp-mini__line:nth-child(5) { width: 30%; margin-top: 8px; }
+.bp-mini__footer {
+  margin-top: auto;
+  border-top: .5px solid var(--copper);
+  padding-top: 4px;
+  display: flex;
+  gap: 8px;
+}
+.bp-mini__footer-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.bp-mini__footer-line {
+  height: .5px;
+  background: #999;
+  opacity: .3;
+}
+
+/* Preview: E-Mail-Signatur */
+.card__preview--sig {
+  background: #f5f5f5;
+  padding: 20px;
+}
+.sig-mini {
+  background: #fff;
+  border-radius: 4px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+}
+.sig-mini__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+.sig-mini__body-line {
+  height: 1.5px;
+  background: #ccc;
+  border-radius: 1px;
+}
+.sig-mini__body-line:nth-child(1) { width: 70%; }
+.sig-mini__body-line:nth-child(2) { width: 45%; }
+.sig-mini__sep {
+  height: 1px;
+  background: #e8e4de;
+  margin-bottom: 8px;
+}
+.sig-mini__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sig-mini__logo {
+  width: 40px;
+  opacity: .7;
+}
+.sig-mini__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sig-mini__name {
+  font-size: 6px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+.sig-mini__title {
+  font-size: 4px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+.sig-mini__detail {
+  height: 1px;
+  width: 30px;
+  background: #bbb;
+  border-radius: .5px;
+}
+
+/* Preview: Impressum */
+.card__preview--legal {
+  background: var(--black);
+  padding: 20px;
+}
+.legal-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+.legal-mini__heading {
+  width: 50%;
+  height: 3px;
+  background: var(--cream);
+  opacity: .2;
+  border-radius: 1px;
+}
+.legal-mini__block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.legal-mini__line {
+  height: 1px;
+  background: var(--surface-4);
+  border-radius: .5px;
+}
+.legal-mini__line:nth-child(1) { width: 70%; }
+.legal-mini__line:nth-child(2) { width: 85%; }
+.legal-mini__line:nth-child(3) { width: 60%; }
+
+/* Card Body */
+.card__body {
+  padding: 24px 24px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.card__cat {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--copper);
+  margin-bottom: 8px;
+}
+.card__title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 8px;
+  letter-spacing: -.2px;
+}
+.card__desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--gray-500);
+  margin-bottom: 20px;
+  flex: 1;
+}
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Status Badge */
+.badge {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+.badge--done {
+  background: rgba(80, 160, 80, .12);
+  color: #6abf6a;
+}
+.badge--wip {
+  background: rgba(192, 128, 64, .12);
+  color: var(--copper);
+}
+
+/* CTA Link */
+.card__cta {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--copper);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap .3s var(--ease);
+}
+.card:hover .card__cta {
+  gap: 10px;
+}
+.card__cta svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ═══════════════════════
+   NEXT STEPS
+   ═══════════════════════ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 8px;
+}
+.step {
+  position: relative;
+  padding: 28px 24px;
+  background: var(--surface-1);
+  border-radius: 6px;
+  border-top: 2px solid var(--copper);
+}
+.step__num {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--copper);
+  opacity: .12;
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -2px;
+}
+.step__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 6px;
+}
+.step__desc {
+  font-size: 13px;
+  color: var(--gray-500);
+  line-height: 1.6;
+}
+.step__active {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--copper);
+}
+.step__active::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--copper);
+  animation: pulse 2s ease infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: .4; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════
+   FEEDBACK
+   ═══════════════════════ */
+.feedback {
+  padding: 72px 0 64px;
+}
+.feedback__box {
+  background: var(--surface-1);
+  border: 1px solid rgba(255,255,255,.03);
+  border-radius: 8px;
+  padding: 48px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: center;
+}
+.feedback__title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: 8px;
+  letter-spacing: -.3px;
+}
+.feedback__text {
+  font-size: 14px;
+  color: var(--gray-500);
+  line-height: 1.65;
+}
+.feedback__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--copper);
+  border: 1.5px solid rgba(192,128,64,.4);
+  background: none;
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: all .4s var(--ease);
+  white-space: nowrap;
+}
+.feedback__btn:hover {
+  background: var(--copper);
+  color: #fff;
+  border-color: var(--copper);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(192,128,64,.25);
+}
+.feedback__btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform .3s var(--ease);
+}
+.feedback__btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* ═══════════════════════
+   FOOTER
+   ═══════════════════════ */
+.footer {
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+}
+.footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer__left {
+  font-size: 10px;
+  color: var(--gray-600);
+  letter-spacing: .5px;
+}
+.footer__right {
+  font-size: 10px;
+  color: var(--gray-600);
+}
+.footer__right a {
+  color: var(--copper);
+  transition: opacity .3s;
+}
+.footer__right a:hover { opacity: .7; }
+
+/* ═══════════════════════
+   RESPONSIVE
+   ═══════════════════════ */
+@media (max-width: 900px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .steps { grid-template-columns: 1fr; }
+  .feedback__box { grid-template-columns: 1fr; text-align: center; }
+  .feedback__btn { justify-content: center; }
+}
+@media (max-width: 600px) {
+  .container { padding: 0 20px; }
+  .cards { grid-template-columns: 1fr; }
+  .hero { padding: 56px 0 32px; }
+  .hero__logo { width: 140px; }
+  .card__preview { height: 140px; }
+  .feedback__box { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ BRAND BAR ═══ -->
+<div class="brand-bar">
+  <div class="container">
+    <span class="brand-bar__name">Pro4Media Digitalagentur</span>
+    <span class="brand-bar__date">Februar 2026</span>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="container">
+    <img class="hero__logo anim" src="assets/hammon-logo-white.png" alt="Hammon Architektur">
+    <div class="overline anim anim-d1">Projekt&uuml;bersicht</div>
+    <h1 class="hero__greeting anim anim-d2">Hallo Katrin</h1>
+    <p class="hero__text anim anim-d3">Hier findest du alle bisherigen Ergebnisse deines Webprojekts auf einen Blick. Klick dich durch die einzelnen Bereiche, schau dir alles in Ruhe an und <a href="#feedback">gib mir Feedback</a>.</p>
+  </div>
+</section>
+
+<!-- ═══ DELIVERABLES ═══ -->
+<section class="section section--border">
+  <div class="container">
+    <div class="overline anim anim-d3">Ergebnisse</div>
+    <div class="cards">
+
+      <!-- 1. Website-Prototyp -->
+      <a href="prototyp.html" class="card anim anim-d3">
+        <div class="card__preview card__preview--proto">
+          <div class="proto-mini">
+            <div class="proto-mini__nav">
+              <span class="proto-mini__dot"></span>
+              <span class="proto-mini__dot"></span>
+              <span class="proto-mini__dot"></span>
+            </div>
+            <div class="proto-mini__hero">
+              <span class="proto-mini__hero-text">Katrin<br>Hammon</span>
+            </div>
+            <div class="proto-mini__sections">
+              <div class="proto-mini__section proto-mini__section--light"></div>
+              <div class="proto-mini__section proto-mini__section--dark"></div>
+              <div class="proto-mini__section proto-mini__section--light"></div>
+              <div class="proto-mini__section proto-mini__section--dark"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__cat">Website</span>
+          <h3 class="card__title">One-Pager Prototyp</h3>
+          <p class="card__desc">Vollst&auml;ndiger Website-Entwurf mit 7 Sektionen, Animationen und responsivem Design. Zum Durchscrollen und Erleben.</p>
+          <div class="card__footer">
+            <span class="badge badge--done">Fertig</span>
+            <span class="card__cta">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 2. Design System -->
+      <a href="design-system.html" class="card anim anim-d4">
+        <div class="card__preview card__preview--ds">
+          <div class="ds-mini__colors">
+            <div class="ds-mini__swatch" style="background: var(--black);"></div>
+            <div class="ds-mini__swatch" style="background: var(--surface-2);"></div>
+            <div class="ds-mini__swatch" style="background: var(--surface-4);"></div>
+            <div class="ds-mini__swatch" style="background: var(--copper);"></div>
+            <div class="ds-mini__swatch" style="background: var(--warm);"></div>
+            <div class="ds-mini__swatch" style="background: var(--cream);"></div>
+          </div>
+          <div class="ds-mini__typo">
+            <div class="ds-mini__line"></div>
+            <div class="ds-mini__line"></div>
+            <div class="ds-mini__line"></div>
+            <div class="ds-mini__line"></div>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__cat">Design</span>
+          <h3 class="card__title">Design System</h3>
+          <p class="card__desc">Farben, Typografie, Spacing und alle visuellen Regeln deines Corporate Designs. Die Grundlage f&uuml;r alles.</p>
+          <div class="card__footer">
+            <span class="badge badge--done">Fertig</span>
+            <span class="card__cta">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 3. Visitenkarte -->
+      <a href="visitenkarte.html" class="card anim anim-d5">
+        <div class="card__preview card__preview--vk">
+          <div class="vk-mini vk-mini--front">
+            <img src="assets/hammon-logo-white.png" alt="">
+          </div>
+          <div class="vk-mini vk-mini--back">
+            <div>
+              <img class="vk-mini__logo-sm" src="assets/hammon-logo.png" alt="">
+              <div class="vk-mini__accent"></div>
+            </div>
+            <div class="vk-mini__lines">
+              <div class="vk-mini__line"></div>
+              <div class="vk-mini__line"></div>
+              <div class="vk-mini__line"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__cat">Print</span>
+          <h3 class="card__title">Visitenkarte</h3>
+          <p class="card__desc">Vorder- und R&uuml;ckseite im Corporate Design. 85 &times; 55 mm, druckfertig mit Papierempfehlung und Veredelung.</p>
+          <div class="card__footer">
+            <span class="badge badge--done">Fertig</span>
+            <span class="card__cta">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 4. Briefpapier -->
+      <a href="briefpapier.html" class="card anim anim-d3">
+        <div class="card__preview card__preview--bp">
+          <div class="bp-mini">
+            <img class="bp-mini__logo" src="assets/hammon-logo.png" alt="">
+            <div class="bp-mini__lines">
+              <div class="bp-mini__line"></div>
+              <div class="bp-mini__line"></div>
+              <div class="bp-mini__line"></div>
+              <div class="bp-mini__line"></div>
+              <div class="bp-mini__line"></div>
+            </div>
+            <div class="bp-mini__footer">
+              <div class="bp-mini__footer-col">
+                <div class="bp-mini__footer-line"></div>
+                <div class="bp-mini__footer-line" style="width:70%"></div>
+              </div>
+              <div class="bp-mini__footer-col">
+                <div class="bp-mini__footer-line"></div>
+                <div class="bp-mini__footer-line" style="width:80%"></div>
+              </div>
+              <div class="bp-mini__footer-col">
+                <div class="bp-mini__footer-line"></div>
+                <div class="bp-mini__footer-line" style="width:60%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__cat">Print</span>
+          <h3 class="card__title">Briefpapier</h3>
+          <p class="card__desc">DIN A4 Gesch&auml;ftspapier mit Briefkopf, Faltmarken (DIN 5008) und Kupfer-Akzent in der Fu&szlig;zeile.</p>
+          <div class="card__footer">
+            <span class="badge badge--done">Fertig</span>
+            <span class="card__cta">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 5. E-Mail-Signatur -->
+      <a href="email-signatur.html" class="card anim anim-d4">
+        <div class="card__preview card__preview--sig">
+          <div class="sig-mini">
+            <div class="sig-mini__body">
+              <div class="sig-mini__body-line"></div>
+              <div class="sig-mini__body-line"></div>
+            </div>
+            <div class="sig-mini__sep"></div>
+            <div class="sig-mini__row">
+              <img class="sig-mini__logo" src="assets/hammon-logo.png" alt="">
+              <div class="sig-mini__info">
+                <span class="sig-mini__name">Katrin Hammon</span>
+                <span class="sig-mini__title">Architektin</span>
+                <div class="sig-mini__detail"></div>
+                <div class="sig-mini__detail" style="width:22px"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__cat">Corporate</span>
+          <h3 class="card__title">E-Mail-Signatur</h3>
+          <p class="card__desc">HTML-Signatur mit Logo und allen Pflichtangaben. Inkl. Einrichtungsanleitung f&uuml;r dein E-Mail-Programm.</p>
+          <div class="card__footer">
+            <span class="badge badge--done">Fertig</span>
+            <span class="card__cta">Anleitung <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 6. Impressum & Datenschutz -->
+      <a href="impressum.html" class="card anim anim-d5">
+        <div class="card__preview card__preview--legal">
+          <div class="legal-mini">
+            <div class="legal-mini__heading"></div>
+            <div class="legal-mini__block">
+              <div class="legal-mini__line"></div>
+              <div class="legal-mini__line"></div>
+              <div class="legal-mini__line"></div>
+            </div>
+            <div class="legal-mini__heading" style="width:35%; margin-top: 4px;"></div>
+            <div class="legal-mini__block">
+              <div class="legal-mini__line"></div>
+              <div class="legal-mini__line"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card__body">
+          <span class="card__cat">Rechtlich</span>
+          <h3 class="card__title">Impressum &amp; Datenschutz</h3>
+          <p class="card__desc">Rechtstexte f&uuml;r deine Website. Impressum mit allen Pflichtangaben und DSGVO-konforme Datenschutzerkl&auml;rung.</p>
+          <div class="card__footer">
+            <span class="badge badge--done">Fertig</span>
+            <span class="card__cta">Ansehen <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEXT STEPS ═══ -->
+<section class="section section--border">
+  <div class="container">
+    <div class="overline anim anim-d4">So geht es weiter</div>
+    <div class="steps">
+      <div class="step anim anim-d4">
+        <div class="step__num">01</div>
+        <div class="step__title">Alles anschauen</div>
+        <p class="step__desc">Klick dich in Ruhe durch alle Ergebnisse. Schau dir den Prototyp auf dem Handy und am Computer an.</p>
+        <span class="step__active">Aktueller Schritt</span>
+      </div>
+      <div class="step anim anim-d5">
+        <div class="step__num">02</div>
+        <div class="step__title">Feedback geben</div>
+        <p class="step__desc">Schreib mir alles, was dir auff&auml;llt. Was gef&auml;llt dir, was soll anders? Einfach per Mail.</p>
+      </div>
+      <div class="step anim anim-d6">
+        <div class="step__num">03</div>
+        <div class="step__title">WordPress-Umsetzung</div>
+        <p class="step__desc">Sobald du zufrieden bist, setze ich alles in WordPress um. Dann geht deine Website live.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEEDBACK ═══ -->
+<section class="feedback" id="feedback">
+  <div class="container">
+    <div class="overline anim anim-d5">Feedback</div>
+    <div class="feedback__box anim anim-d5">
+      <div>
+        <div class="feedback__title">Sag mir, was du denkst</div>
+        <p class="feedback__text">Ich freue mich &uuml;ber jede R&uuml;ckmeldung. Was gef&auml;llt dir gut? Was soll anders? Schreib mir einfach eine E-Mail mit deinen Anmerkungen.</p>
+      </div>
+      <a href="mailto:info@pro4media.de?subject=Feedback%20Hammon%20Architektur%20Website" class="feedback__btn">
+        Feedback senden
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="container">
+    <span class="footer__left">&copy; 2026 Pro4Media Digitalagentur</span>
+    <span class="footer__right">Erstellt f&uuml;r Katrin Hammon &middot; <a href="mailto:info@pro4media.de">info@pro4media.de</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
